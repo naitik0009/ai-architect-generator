@@ -1,7 +1,3 @@
-This is a great move. Updating your README.md now ensures that when you open this repo on your friend's M3 Max on Monday, you have a perfect "instruction manual" to follow.
-
-I have updated the Quick Start section to include the missing datasets library, the split_data.py step, and the optimized training command for Apple Silicon.
-
 Kalkulio AI Architect Generator
 An AI-powered pipeline designed to generate valid, topologically correct JSON floor plans for the Kalkulio AI Challenge.
 
