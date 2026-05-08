@@ -1,0 +1,6 @@
+kalkulio-env/
+raw_data/
+data/
+kalkulio-adapters/
+.DS_Store
+__pycache__/
