@@ -46,6 +46,7 @@ python -m mlx_lm.lora \
     --max-seq-length 8192 \
     --iters 500 \
     --adapter-path kalkulio-adapters
+    
 4. Testing the Model
 Once training is complete, test the generation using the generated adapters:
 
@@ -55,6 +56,7 @@ python -m mlx_lm.generate \
     --adapter-path ./kalkulio-adapters \
     --max-tokens 4000 \
     --prompt "Generate a floor plan for a house with an approximate area of 120m2."
+    
 📁 Repository Structure
 kalkulio_all.json: Master dataset (keep local, gitignored).
 
