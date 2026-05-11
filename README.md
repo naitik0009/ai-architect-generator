@@ -1,5 +1,5 @@
 Kalkulio AI Architect Generator
-An AI-powered pipeline designed to generate valid, topologically correct JSON floor plans for the Kalkulio AI Challenge.
+An AI-powered pipeline designed to generate valid, topologically correct JSON floor plans for [the Kalkulio AI Challenge](https://ai.kalkulio.cz/challenge).
 
 This project leverages Apple Silicon's native MLX framework to fine-tune an LLM (Qwen2.5-Coder) using LoRA, transforming raw conversational prompts into highly structured, geometrically strict JSON architectural representations.
 
