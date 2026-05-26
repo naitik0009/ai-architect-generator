@@ -1,12 +1,13 @@
-# Kalkulio AI Architect Generator
+### Kalkulio AI Architect Generator
+An AI-powered pipeline designed to generate valid, topologically correct JSON floor plans for the Kalkulio AI Challenge.
 
-An AI-powered pipeline designed to generate valid, topologically correct JSON floor plans for the [Kalkulio AI Challenge](https://kalkulio.cz/). 
+This project leverages Apple Silicon's native MLX framework to fine-tune an LLM (Qwen2.5-Coder) using LoRA, transforming raw conversational prompts into highly structured, geometrically strict JSON architectural representations.
 
 This project leverages the **HuggingFace & PyTorch ecosystem (CUDA)** to fine-tune an LLM (Qwen2.5-Coder) using LoRA, transforming raw conversational prompts into highly structured, geometrically strict JSON architectural representations. It is perfectly optimized for an **NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition**.
 
-## 🏗️ Architecture & Strategy
+The pipeline consists of three main phases:
 
-Because standard image generation models cannot output valid vector graphics or specific JSON structures with mathematically sound geometries, this project treats floor plan generation as a **Sequence-to-Sequence (Structured Output)** problem.
+Data Augmentation: A Python script ingests raw JSON samples and applies geometric scaling and mirroring to synthetically expand the dataset.
 
 The pipeline consists of three main phases:
 1. **Data Augmentation:** A Python script ingests 70 initial parsed JSON samples from Kalkulio and applies geometric scaling (and other augmentations) to synthetically expand the dataset.
@@ -17,8 +18,9 @@ The pipeline consists of three main phases:
 
 This project requires Python 3.10+ and a CUDA-capable NVIDIA GPU (e.g., RTX 6000 series).
 
-### 1. Setup the Environment
-```bash
+### Bash
+git clone https://github.com/naitik0009/ai-architect-generator.git
+cd ai-architect-generator
 python3 -m venv kalkulio-env
 source kalkulio-env/bin/activate
 
