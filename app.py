@@ -10,9 +10,13 @@ from peft import PeftModel
 
 from post_process import post_process, has_closed_exterior_loop
 
-# --- Configuration ---
-BASE_MODEL = "Qwen/Qwen2.5-Coder-14B-Instruct"
-ADAPTER_PATH = "./qwen-kalkulio-lora-14b-v4/final"
+# --- Configuration (overridable via env vars, e.g. for Colab/cloud) ---
+BASE_MODEL = os.environ.get("BASE_MODEL", "Qwen/Qwen2.5-Coder-14B-Instruct")
+# Local adapter dir by default; set ADAPTER_PATH=naitik12kumar/qwen-kalkulio-lora-14b-v4
+# to pull straight from the HF Hub (no local files needed).
+ADAPTER_PATH = os.environ.get("ADAPTER_PATH", "./qwen-kalkulio-lora-14b-v4/final")
+# Set LOAD_IN_4BIT=1 to fit the 14B on a 16 GB GPU (e.g. Colab free T4).
+LOAD_IN_4BIT = os.environ.get("LOAD_IN_4BIT", "0") == "1"
 SYSTEM_PROMPT = "You are an expert architectural AI. Generate a valid JSON floor plan for a single-family house."
 
 # --- Global Model State ---
@@ -22,11 +26,20 @@ tokenizer = None
 def load_model():
     global model, tokenizer
     if model is None:
-        print("Loading model and tokenizer...")
+        print(f"Loading {BASE_MODEL}  (4-bit={LOAD_IN_4BIT})  + adapter {ADAPTER_PATH} ...")
         tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL)
-        base = AutoModelForCausalLM.from_pretrained(
-            BASE_MODEL, dtype=torch.bfloat16, device_map="auto", attn_implementation="sdpa"
-        )
+        load_kwargs = dict(device_map="auto", attn_implementation="sdpa")
+        if LOAD_IN_4BIT:
+            from transformers import BitsAndBytesConfig
+            load_kwargs["quantization_config"] = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_compute_dtype=torch.bfloat16,
+                bnb_4bit_use_double_quant=True,
+            )
+        else:
+            load_kwargs["dtype"] = torch.bfloat16
+        base = AutoModelForCausalLM.from_pretrained(BASE_MODEL, **load_kwargs)
         model = PeftModel.from_pretrained(base, ADAPTER_PATH)
         model.eval()
         print("Model loaded successfully.")
