@@ -1,4 +1,5 @@
-# Kalkulio AI Architect Generator
+Kalkulio AI Architect Generator
+An AI-powered pipeline designed to generate valid, topologically correct JSON floor plans for [the Kalkulio AI Challenge](https://ai.kalkulio.cz/challenge).
 
 An AI system that generates valid, geometrically-correct JSON floor plans for
 single-family houses from a simple text prompt (target area in m²), built for
